@@ -1,14 +1,10 @@
-/// Returns a greeting for `name`.
-pub fn greet(name: &str) -> String {
-    format!("Hello, {name}! Welcome to Rust Vibe Code.")
-}
+pub mod todos;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use axum::Router;
 
-    #[test]
-    fn greets_by_name() {
-        assert_eq!(greet("Wan"), "Hello, Wan! Welcome to Rust Vibe Code.");
-    }
+pub use todos::Store;
+
+/// Builds the application router backed by the given Redis store.
+pub fn app(store: Store) -> Router {
+    todos::router(store)
 }
